@@ -1,0 +1,13 @@
+.center {
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 4rem 0;
+  }
+  
+.success {
+  font-size: large; 
+  color: white;
+}
