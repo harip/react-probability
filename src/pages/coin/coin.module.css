@@ -1,0 +1,46 @@
+.center {
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 4rem;
+}
+  
+.success {
+  font-size: large; 
+  color: white;
+}
+
+.dice {
+  font-size: 100px;
+}
+
+.probability {
+  font-size: x-large;
+  color: green;
+  text-align: center;
+}
+
+.title {
+  display: flex ;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 1rem 0;
+}
+
+.slider {
+  display: flex ;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  position: relative;
+  padding: 4rem;
+  padding-left: 10rem;
+}
+
+.item4 {
+  flex-grow: 1;
+}

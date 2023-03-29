@@ -13,14 +13,22 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.15",
+    "@reduxjs/toolkit": "^1.9.3",
     "@types/node": "18.15.10",
     "@types/react": "18.0.30",
     "@types/react-dom": "18.0.11",
+    "@types/react-redux": "^7.1.25",
+    "@types/recharts": "^1.8.24",
+    "@types/redux-thunk": "^2.1.0",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "^8.0.5",
+    "recharts": "^2.5.0",
+    "redux": "^4.2.1",
+    "redux-thunk": "^2.4.2",
     "typescript": "5.0.2"
   }
 }

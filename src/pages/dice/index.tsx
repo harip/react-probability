@@ -1,6 +1,8 @@
-import { Box, Chip, Divider, Slider, Checkbox, AppBar } from "@mui/material";
+import { Box, Chip, Divider, Slider, Checkbox, AppBar, Button, Toolbar } from "@mui/material";
 import { useMemo, useState } from "react";
+import { useRouter } from "next/router";
 import Typography from '@mui/material/Typography';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DiceComponent from "./components/dice";
 import OutcomeDisplayComponent from "./components/outcome-display";
 import { getProbabilityInfo } from "./dice-utils";
@@ -11,6 +13,7 @@ const DiceProbabilityComponent = () => {
     const [sum, setSum] = useState(1);
     const [showAllOutcomes, setShowAllOutcomes] = useState<boolean>(false);
     const [showDiceValues, setShowDiceValues] = useState<[]>([]);
+    const router = useRouter();
 
     const getProbablityCalculations = useMemo(
         () => getProbabilityInfo(dice, sum),
@@ -43,19 +46,32 @@ const DiceProbabilityComponent = () => {
         return outcomes;
     }
 
+    function navigateToNextPage() {
+        router.push('coin');
+    }
+
     const onOutcomeClick = (data: any) => {
         setShowDiceValues(data)
+    }
+
+    const canShowAllOutcomes = () => {
+        return showAllOutcomes && dice <= 4;
     }
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
         <>
             <AppBar position="static">
-                <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
-                    <div className={styles.title}>
-                        Dice Probablilty
-                    </div>
-                </Typography>
+                <Toolbar>
+                    <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
+                        <div className={styles.title}>
+                            Dice Probablilty
+                        </div>
+                    </Typography>
+                    <Button color="inherit" onClick={navigateToNextPage}>
+                        <ArrowForwardIcon fontSize='large' />
+                    </Button>
+                </Toolbar>
             </AppBar>
             <div className={styles.center}>
                 <div>
@@ -100,7 +116,7 @@ const DiceProbabilityComponent = () => {
             </div>
             <Divider />
             <div className={styles.center}>
-                <span className={styles.probability}>Probability of getting sum {sum} when {dice} dice are rolled = {getProbablityCalculations.probability}</span>                
+                <span className={styles.probability}>Probability of getting sum {sum} when {dice} dice are rolled = {getProbablityCalculations.probability}</span>
             </div>
             <Divider />
             {getProbablityCalculations &&
@@ -122,10 +138,11 @@ const DiceProbabilityComponent = () => {
                             className={styles.success}
                             onChange={(e) => setShowAllOutcomes(e.target.checked)} /> Show
                     </span>
-                    {showAllOutcomes && 
+                    {canShowAllOutcomes() && (
                         <div >
                             {createOutcomeDisplay(getProbablityCalculations.totalPossibleOutcomes)}
                         </div>
+                    )
                     }
                 </div>
             }

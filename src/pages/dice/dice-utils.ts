@@ -16,7 +16,6 @@ export const getProbabilityInfo = (numberOfDice: number, sum: number) => {
 }
 
 function findDiceCombinations(numDice: number, targetSum: number) {
-    console.log('------------------function called----------------------')
     const dice = [1, 2, 3, 4, 5, 6];
     const combinations = [];
     const numberOfWaysEventCanOccur = [];
