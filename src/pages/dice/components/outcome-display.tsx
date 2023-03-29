@@ -1,8 +1,12 @@
 import { Box, Chip } from "@mui/material";
 
-const OutcomeDisplayComponent = (props: any) => {
-    return(
-        <Chip label={`${props.data}`} variant="outlined" color="primary"/>
+interface OutcomeDisplayProps {
+    data: any;
+    onOutcomeClick: any
+}
+const OutcomeDisplayComponent: React.FC<OutcomeDisplayProps> = ({ data, onOutcomeClick }) => {
+    return (
+        <Chip label={`${data}`} variant="outlined" color="primary" onClick={()=>onOutcomeClick(data)} />
     )
 }
 

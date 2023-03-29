@@ -9,6 +9,7 @@ const DiceProbabilityComponent = () => {
     const [dice, setDice] = useState(1);
     const [sum, setSum] = useState(1);
     const [showAllOutcomes,setShowAllOutcomes] = useState<boolean>(false);
+    const [showDiceValues,setShowDiceValues] = useState<[]>([]);
 
     const getProbablityCalculations = useMemo(
         ()=> getProbabilityInfo(dice, sum),
@@ -25,7 +26,7 @@ const DiceProbabilityComponent = () => {
 
     function createDice() {
         const dices = Array.from({ length: dice }, (_, index) => index).map(f => {
-            return (<DiceComponent key={`dice-{f}`} />)
+            return (<DiceComponent key={`dice-{f}`}  value={showDiceValues[f]}/>)
         });
         return dices;
     }
@@ -33,10 +34,14 @@ const DiceProbabilityComponent = () => {
     function createOutcomeDisplay(data: any[][]) {
         const outcomes = data.map(d => {
             return (
-                <OutcomeDisplayComponent data={d} />
+                <OutcomeDisplayComponent data={d} onOutcomeClick={onOutcomeClick}/>
             )
         });
         return outcomes;
+    }
+
+    const onOutcomeClick = (data: any) => {
+        setShowDiceValues(data)
     }
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };

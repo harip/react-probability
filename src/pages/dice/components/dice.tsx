@@ -1,10 +1,14 @@
 
-import CasinoIcon from '@mui/icons-material/Casino';
+import DiceIconComponent from './dice-icon';
 
-const DiceComponent = () => {
+interface DiceComponentProps {
+    value: number
+}
+
+const DiceComponent:React.FC<DiceComponentProps> = ({value}) => {
     return(
         <>
-            <CasinoIcon key={`dice-{f}`} sx={{ fontSize: 100 }} />
+            <DiceIconComponent value={value}/>
         </>
     )
 }
