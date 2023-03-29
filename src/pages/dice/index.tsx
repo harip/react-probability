@@ -1,5 +1,6 @@
-import { Box, Chip, Divider, Slider, Checkbox } from "@mui/material";
+import { Box, Chip, Divider, Slider, Checkbox, AppBar } from "@mui/material";
 import { useMemo, useState } from "react";
+import Typography from '@mui/material/Typography';
 import DiceComponent from "./components/dice";
 import OutcomeDisplayComponent from "./components/outcome-display";
 import { getProbabilityInfo } from "./dice-utils";
@@ -8,12 +9,12 @@ import styles from './dice.module.css'
 const DiceProbabilityComponent = () => {
     const [dice, setDice] = useState(1);
     const [sum, setSum] = useState(1);
-    const [showAllOutcomes,setShowAllOutcomes] = useState<boolean>(false);
-    const [showDiceValues,setShowDiceValues] = useState<[]>([]);
+    const [showAllOutcomes, setShowAllOutcomes] = useState<boolean>(false);
+    const [showDiceValues, setShowDiceValues] = useState<[]>([]);
 
     const getProbablityCalculations = useMemo(
-        ()=> getProbabilityInfo(dice, sum),
-        [sum,dice]
+        () => getProbabilityInfo(dice, sum),
+        [sum, dice]
     );
 
     function onDiceSliderChange(event: any, value: any) {
@@ -28,7 +29,7 @@ const DiceProbabilityComponent = () => {
 
     function createDice() {
         const dices = Array.from({ length: dice }, (_, index) => index).map(f => {
-            return (<DiceComponent key={`dice-{f}`}  value={showDiceValues[f]}/>)
+            return (<DiceComponent key={`dice-{f}`} value={showDiceValues[f]} />)
         });
         return dices;
     }
@@ -36,7 +37,7 @@ const DiceProbabilityComponent = () => {
     function createOutcomeDisplay(data: any[][]) {
         const outcomes = data.map(d => {
             return (
-                <OutcomeDisplayComponent data={d} onOutcomeClick={onOutcomeClick}/>
+                <OutcomeDisplayComponent data={d} onOutcomeClick={onOutcomeClick} />
             )
         });
         return outcomes;
@@ -49,6 +50,13 @@ const DiceProbabilityComponent = () => {
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
         <>
+            <AppBar position="static">
+                <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
+                    <div className={styles.title}>
+                        Dice Probablilty
+                    </div>
+                </Typography>
+            </AppBar>
             <div className={styles.center}>
                 <div>
                     {createDice()}
@@ -92,10 +100,10 @@ const DiceProbabilityComponent = () => {
             </div>
             <Divider />
             <div className={styles.center}>
-                <Chip  className={styles.probability} label={`Probability of getting sum ${sum} when ${dice} dice are rolled = ${getProbablityCalculations.probability}`} variant="outlined" color="success"/>
+                <Chip className={styles.probability} label={`Probability of getting sum ${sum} when ${dice} dice are rolled = ${getProbablityCalculations.probability}`} variant="outlined" color="success" />
             </div>
             <Divider />
-            { getProbablityCalculations &&
+            {getProbablityCalculations &&
                 <div className={styles.center}>
                     Number of ways event can occur - {getProbablityCalculations.numberOfWaysEventCanOccur.length}
                     <div>
@@ -104,23 +112,23 @@ const DiceProbabilityComponent = () => {
                 </div>
             }
             <Divider />
-            { getProbablityCalculations &&
+            {getProbablityCalculations &&
                 <div className={styles.center}>
                     Total possible outcomes - {getProbablityCalculations.totalPossibleOutcomes.length}
                     <span >
-                        <Checkbox  
-                            {...label} 
-                            color="success" 
-                            className={styles.success} 
-                            onChange={ (e)=> setShowAllOutcomes(e.target.checked) }/> Show
+                        <Checkbox
+                            {...label}
+                            color="success"
+                            className={styles.success}
+                            onChange={(e) => setShowAllOutcomes(e.target.checked)} /> Show
                     </span>
-                    { showAllOutcomes &&
+                    {showAllOutcomes && 
                         <div >
                             {createOutcomeDisplay(getProbablityCalculations.totalPossibleOutcomes)}
-                        </div>                         
+                        </div>
                     }
-                </div>                            
-            }   
+                </div>
+            }
         </>
     )
 };
