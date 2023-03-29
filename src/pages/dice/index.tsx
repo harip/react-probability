@@ -17,10 +17,12 @@ const DiceProbabilityComponent = () => {
     );
 
     function onDiceSliderChange(event: any, value: any) {
+        setShowDiceValues([])
         setDice(value)
     }
 
     function onDiceSumSliderChange(event: any, value: any) {
+        setShowDiceValues([])
         setSum(value)
     }
 
