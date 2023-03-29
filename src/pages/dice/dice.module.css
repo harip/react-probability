@@ -17,7 +17,9 @@
 }
 
 .probability {
-  font-size: xx-large;
+  font-size: x-large;
+  color: green;
+  text-align: center;
 }
 
 .title {
