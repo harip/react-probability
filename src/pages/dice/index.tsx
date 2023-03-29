@@ -92,7 +92,7 @@ const DiceProbabilityComponent = () => {
             </div>
             <Divider />
             <div className={styles.center}>
-                <Chip label={`Probability of getting sum ${sum} when ${dice} dice are rolled = ${getProbablityCalculations.probability}`} variant="outlined" color="success"/>
+                <Chip  className={styles.probability} label={`Probability of getting sum ${sum} when ${dice} dice are rolled = ${getProbablityCalculations.probability}`} variant="outlined" color="success"/>
             </div>
             <Divider />
             { getProbablityCalculations &&
