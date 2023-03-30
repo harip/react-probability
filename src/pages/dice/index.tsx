@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DiceComponent from "./components/dice";
 import OutcomeDisplayComponent from "./components/outcome-display";
-import { getProbabilityInfo } from "./dice-utils";
+import getProbabilityInfo from "./dice-utils";
 import styles from './dice.module.css'
 
 const DiceProbabilityComponent = () => {
