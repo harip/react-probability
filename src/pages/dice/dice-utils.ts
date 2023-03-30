@@ -1,4 +1,4 @@
-export const getProbabilityInfo = (numberOfDice: number, sum: number) => {
+const getProbabilityInfo = (numberOfDice: number, sum: number) => {
     const minSumOfDice = numberOfDice * 1;
     const totalNumberOfPossibleOutcomes = Math.pow(6,numberOfDice);
 
@@ -40,3 +40,5 @@ function findDiceCombinations(numDice: number, targetSum: number) {
 
     return [numberOfWaysEventCanOccur, combinations];
 }
+
+export default getProbabilityInfo;

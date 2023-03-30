@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { setNumberOfTrails } from "../../store/coin-action";
 import { useSelector } from 'react-redux';
 import { RootState, CoinProbabilityState } from '../../store/types';
-import { binomialDistribution } from "./coin-utils";
+import binomialDistribution from "./coin-utils";
 import { BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar } from "recharts";
 
 interface ChartDataItem {

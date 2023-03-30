@@ -32,15 +32,15 @@ const DiceProbabilityComponent = () => {
 
     function createDice() {
         const dices = Array.from({ length: dice }, (_, index) => index).map(f => {
-            return (<DiceComponent key={`dice-{f}`} value={showDiceValues[f]} />)
+            return (<DiceComponent key={`dice-${f}`} value={showDiceValues[f]} />)
         });
         return dices;
     }
 
-    function createOutcomeDisplay(data: any[][]) {
-        const outcomes = data.map(d => {
+    function createOutcomeDisplay(data: any[][], key:string) {
+        const outcomes = data.map((d,i) => {
             return (
-                <OutcomeDisplayComponent data={d} onOutcomeClick={onOutcomeClick} />
+                <OutcomeDisplayComponent data={d} key={`outcome-${key}-${i}`} onOutcomeClick={onOutcomeClick} />
             )
         });
         return outcomes;
@@ -123,7 +123,7 @@ const DiceProbabilityComponent = () => {
                 <div className={styles.center}>
                     Number of ways event can occur - {getProbablityCalculations.numberOfWaysEventCanOccur.length}
                     <div>
-                        {createOutcomeDisplay(getProbablityCalculations.numberOfWaysEventCanOccur)}
+                        {createOutcomeDisplay(getProbablityCalculations.numberOfWaysEventCanOccur,'ev')}
                     </div>
                 </div>
             }
@@ -140,7 +140,7 @@ const DiceProbabilityComponent = () => {
                     </span>
                     {canShowAllOutcomes() && (
                         <div >
-                            {createOutcomeDisplay(getProbablityCalculations.totalPossibleOutcomes)}
+                            {createOutcomeDisplay(getProbablityCalculations.totalPossibleOutcomes,'po')}
                         </div>
                     )
                     }

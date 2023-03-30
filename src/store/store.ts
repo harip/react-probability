@@ -3,8 +3,11 @@ import thunk from "redux-thunk";
 import coinReducer from './coin-reducer';
 import { RootState } from './types';
 
+const dummyReducer = (state:any={}) => state;
+
 const rootReducer = combineReducers<RootState>({
-  coin: coinReducer
+  coin: coinReducer,
+  dummy: dummyReducer
 });
  
 

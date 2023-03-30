@@ -1,4 +1,4 @@
-export const binomialDistribution = (numberOfTrials: number) => {
+const binomialDistribution = (numberOfTrials: number) => {
     // P(k) = [n! / (k! * (n-k)!)] * p^k * (1-p)^(n-k)
     // n is total number of trials
     // k is probability of k heads appearing in n trials
@@ -34,3 +34,5 @@ function factorial(n: number): number {
       return n * factorial(n - 1);
     }
   }
+
+export default binomialDistribution;
