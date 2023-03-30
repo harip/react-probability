@@ -117,7 +117,7 @@ const CoinComponent = () => {
                     </Button>
                     <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
                         <div className={styles.title}>
-                            Coin Probablilty - Binomail Distribution
+                            Coin Probablilty - Binomial Distribution
                         </div>
                     </Typography>
                     <Button color="inherit" onClick={navigateToNextPage}>

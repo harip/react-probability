@@ -107,7 +107,7 @@ const DiceProbabilityComponent = () => {
                 <Toolbar>
                     <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
                         <div className={styles.title}>
-                            Dice Probablilty
+                            Dice Probability
                         </div>
                     </Typography>
                     <Button color="inherit" onClick={navigateToNextPage}>
