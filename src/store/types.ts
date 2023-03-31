@@ -5,4 +5,5 @@ export interface RootState {
 
 export interface CoinProbabilityState {
     numberOfTrials: number;
+    numberOfFlips: number;
 }
