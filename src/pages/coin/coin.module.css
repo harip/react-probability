@@ -31,16 +31,23 @@
   padding: 1rem 0;
 }
 
-.slider {
+.binomial {
   display: flex ;
   flex-direction: row;
-  justify-content: left;
-  align-items: center;
-  position: relative;
   padding: 4rem;
-  padding-left: 10rem;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+  text-align: center; 
+  align-items: top;
+  flex-wrap: wrap;
+  row-gap: 4rem;
+  justify-content: space-between
 }
 
-.item4 {
-  flex-grow: 1;
+.divider {
+  display: flex ;
+  flex-direction: row;  
+  margin-left: 4rem;
+  margin-right: 4rem;
+  background-color: aqua;
 }
