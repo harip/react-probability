@@ -41,7 +41,6 @@
   align-items: top;
   flex-wrap: wrap;
   row-gap: 4rem;
-  justify-content: space-between
 }
 
 .divider {
@@ -50,4 +49,12 @@
   margin-left: 4rem;
   margin-right: 4rem;
   background-color: aqua;
+}
+
+.item {
+  margin-left: 2rem;
+}
+
+.coinSuccess {
+  margin: 2rem;
 }

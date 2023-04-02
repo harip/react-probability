@@ -132,7 +132,7 @@ const CoinComponent = () => {
                         />
                     </Box>
                 </div>
-                <Card sx={{ minWidth: 650 }}>
+                <Card sx={{ minWidth: 500 }} className={styles.item}>
                     <CardHeader
                         title="Binomial Distribution"
                         subheader={`number of trials : ${numberOfTrials}`}
@@ -183,7 +183,7 @@ const CoinComponent = () => {
                         {`${numberOfFlips}`}
                     </div>
                 </div>
-                <Card sx={{ minWidth: 500, maxWidth: 500 }}>
+                <Card sx={{ minWidth: 500, maxWidth: 500 }} className={styles.item}>
                     <CardHeader
                         title="Coin Flip Combinations"
                     />
@@ -203,6 +203,18 @@ const CoinComponent = () => {
                 </Card>
                 <Card sx={{ minWidth: 345 }} className={styles.item}>
                     <CardContent>
+                    <Box sx={{ height: 400 }} className={styles.item}>
+                        <Slider
+                            aria-label="Temperature"
+                            defaultValue={2}
+                            onChange={(e, v) => onNumberOfTrialsChange(e, v)}
+                            valueLabelDisplay="auto"
+                            step={1}
+                            marks
+                            min={2}
+                            max={10}  
+                        />
+                    </Box>
                         <Typography variant="subtitle2">
                             The probability of getting 2 heads in n coin flips is the bar height at x-axis = 2
                         </Typography>

@@ -18,7 +18,7 @@ const DiceProbabilityComponent = () => {
     const getProbablityCalculations = useMemo(
         () => getProbabilityInfo(dice, sum),
         [sum, dice]
-    ); 
+    );
 
     function onDiceSliderChange(event: any, value: any) {
         setShowDiceValues([])
@@ -37,8 +37,8 @@ const DiceProbabilityComponent = () => {
         return dices;
     }
 
-    function createOutcomeDisplay(data: any[][], key:string) {
-        const outcomes = data.map((d,i) => {
+    function createOutcomeDisplay(data: any[][], key: string) {
+        const outcomes = data.map((d, i) => {
             return (
                 <OutcomeDisplayComponent data={d} key={`outcome-${key}-${i}`} onOutcomeClick={onOutcomeClick} />
             )
@@ -77,9 +77,9 @@ const DiceProbabilityComponent = () => {
                 <div>
                     {createDice()}
                 </div>
-                <Box sx={{ width: 600 }}>
+                <div className={styles.item}>
+
                     <Slider
-                        aria-label="Temperature"
                         defaultValue={1}
                         onChange={(e, v) => onDiceSliderChange(e, v)}
                         valueLabelDisplay="auto"
@@ -88,7 +88,8 @@ const DiceProbabilityComponent = () => {
                         min={1}
                         max={6}
                     />
-                </Box>
+
+                </div>
                 <div>
                     Number of dice - {dice}
                 </div>
@@ -98,7 +99,7 @@ const DiceProbabilityComponent = () => {
                 <div >
                     {sum}
                 </div>
-                <Box sx={{ width: 600 }}>
+                <div className={styles.item}>
                     <Slider
                         aria-label="Sum"
                         defaultValue={1}
@@ -108,8 +109,8 @@ const DiceProbabilityComponent = () => {
                         marks
                         min={1}
                         max={dice * 6}
-                    />
-                </Box>
+                    /> 
+                </div>
                 <div>
                     Sum of rolled numbers - {sum}
                 </div>
@@ -123,7 +124,7 @@ const DiceProbabilityComponent = () => {
                 <div className={styles.center}>
                     Number of ways event can occur - {getProbablityCalculations.numberOfWaysEventCanOccur.length}
                     <div>
-                        {createOutcomeDisplay(getProbablityCalculations.numberOfWaysEventCanOccur,'ev')}
+                        {createOutcomeDisplay(getProbablityCalculations.numberOfWaysEventCanOccur, 'ev')}
                     </div>
                 </div>
             }
@@ -140,7 +141,7 @@ const DiceProbabilityComponent = () => {
                     </span>
                     {canShowAllOutcomes() && (
                         <div >
-                            {createOutcomeDisplay(getProbablityCalculations.totalPossibleOutcomes,'po')}
+                            {createOutcomeDisplay(getProbablityCalculations.totalPossibleOutcomes, 'po')}
                         </div>
                     )
                     }
