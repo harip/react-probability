@@ -195,8 +195,8 @@ const CoinComponent = () => {
                             total combinations {coinFlipCombos.length}
                         </Typography>
                         {
-                            coinFlipCombos.map(c=>{
-                                return <Chip label={`${c}`} variant="outlined" color="primary" />
+                            coinFlipCombos.map( (c,i) =>{
+                                return <Chip label={`${c}`} variant="outlined" color="primary" key={`chip-allcombo-${i}`}/>
                             })
                         } 
                     </CardContent>
