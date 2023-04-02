@@ -26,12 +26,16 @@
 .title {
   display: flex ;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  padding: 1rem 0;
+  justify-content: left;
+  position: relative; 
+  text-align: left;
 }
 
 .item{
   width: 100%
+}
+
+.appbartitle {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }

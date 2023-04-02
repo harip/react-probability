@@ -1,4 +1,4 @@
-import { Box, Chip, Divider, Slider, Checkbox, AppBar, Button, Toolbar } from "@mui/material";
+import { Box, Chip, Divider, Slider, Checkbox, AppBar, Button, Toolbar, Link } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import Typography from '@mui/material/Typography';
@@ -61,18 +61,25 @@ const DiceProbabilityComponent = () => {
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
         <>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
-                        <div className={styles.title}>
-                            Dice Probability
-                        </div>
-                    </Typography>
-                    <Button color="inherit" onClick={navigateToNextPage}>
-                        <ArrowForwardIcon fontSize='large' />
-                    </Button>
-                </Toolbar>
-            </AppBar>
+             <div className={styles.title}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Typography variant="h3" component="div" sx={{ flexGrow: 1 }} className={styles.appbartitle}>
+                                Dice Probability
+                        </Typography>
+                        <Button color="inherit" onClick={navigateToNextPage}>
+                            <ArrowForwardIcon fontSize='large' />
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+                <div>
+                <Typography variant="subtitle2"  >
+                        Component State/Local State
+                        </Typography>
+
+                    <Link href="https://github.com/harip/react-probability/blob/59d65cafa409355c888b8c37586266b3d9c6a06c/src/lib/dice.utils.ts#L18">Dice combinations algorithm</Link>
+                </div>
+            </div>
             <div className={styles.center}>
                 <div>
                     {createDice()}
