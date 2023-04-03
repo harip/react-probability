@@ -26,15 +26,6 @@
   text-align: center;
 }
 
-.title {
-  display: flex ;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  padding: 1rem 0;
-}
-
 .binomial {
   display: flex ;
   flex-direction: row; 
@@ -58,6 +49,19 @@
 
 .coinSuccess {
   margin: 2rem;
+}
+
+.title {
+  display: flex ;
+  flex-direction: column;
+  justify-content: left;
+  position: relative; 
+  text-align: left;
+}
+
+.appbartitle {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 @media (max-width: 600px) {

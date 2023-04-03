@@ -61,7 +61,7 @@ const DiceProbabilityComponent = () => {
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
         <>
-             <div className={styles.title}>
+            <div className={styles.title}>
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h3" component="div" sx={{ flexGrow: 1 }} className={styles.appbartitle}>
@@ -73,10 +73,9 @@ const DiceProbabilityComponent = () => {
                     </Toolbar>
                 </AppBar>
                 <div>
-                <Typography variant="subtitle2"  >
+                    <Typography variant="subtitle2"  >
                         Component State/Local State
-                        </Typography>
-
+                    </Typography>
                     <Link href="https://github.com/harip/react-probability/blob/59d65cafa409355c888b8c37586266b3d9c6a06c/src/lib/dice.utils.ts#L18">Dice combinations algorithm</Link>
                 </div>
             </div>

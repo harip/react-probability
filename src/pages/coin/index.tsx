@@ -1,4 +1,4 @@
-import { Box, Chip, Divider, Slider, Checkbox, AppBar, Button, Toolbar, Tooltip } from "@mui/material";
+import { Box, Chip, Divider, Slider, Checkbox, AppBar, Button, Toolbar, Tooltip, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Typography from '@mui/material/Typography';
 import { useRouter } from "next/router";
@@ -108,22 +108,30 @@ const CoinComponent = () => {
     }
 
     return (
-        <div >
-            <AppBar position="static" >
-                <Toolbar>
-                    <Button color="inherit" onClick={navigateToPreviousPage}>
-                        <ArrowBackIcon fontSize='large' />
-                    </Button>
-                    <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
-                        <div className={styles.title}>
-                            Coin Probablilty
-                        </div>
+        <>
+            <div className={styles.title}>
+                <AppBar position="static" >
+                    <Toolbar>
+                        <Button color="inherit" onClick={navigateToPreviousPage}>
+                            <ArrowBackIcon fontSize='large' />
+                        </Button>
+                        <Typography variant="h3" component="div" sx={{ flexGrow: 1 }} className={styles.appbartitle}>
+                            <div className={styles.title}>
+                                Coin Probablilty
+                            </div>
+                        </Typography>
+                        <Button color="inherit" onClick={navigateToNextPage}>
+                            <ArrowForwardIcon fontSize='large' />
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+                <div>
+                    <Typography variant="subtitle2"  >
+                        Redux Store
                     </Typography>
-                    <Button color="inherit" onClick={navigateToNextPage}>
-                        <ArrowForwardIcon fontSize='large' />
-                    </Button>
-                </Toolbar>
-            </AppBar>
+                    <Link href="https://github.com/harip/react-probability/blob/904f6e2d7218a2796e92a3c14174504d19cdeb85/src/lib/coin.utils.ts#L38">Coin combinations algorithm</Link>
+                </div>               
+            </div>
 
             <div className={styles.binomial}>
                 <Card  className={styles.chartItem}>
@@ -237,7 +245,7 @@ const CoinComponent = () => {
                     </CardContent>
                 </Card>
             </div>
-        </div>
+        </>
     )
 }
 export default CoinComponent;
