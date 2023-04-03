@@ -8,7 +8,7 @@ export const binomialDistribution = (numberOfTrials: number) => {
 
     // if number of trails are 3
     // find P(heads=0),P(heads=1) and P(heads=2), so itreate i=0 to i=3-1
-    const distributionValues = new Map<number, number>();
+    const distributionValues = new Map<number, string>();
     for (let k = 0; k <= numberOfTrials; k++) {
         // [n! / (k! * (n-k)!)]
         const calc1 = factorial(numberOfTrials) / (factorial(k) * factorial(numberOfTrials - k));
@@ -20,7 +20,7 @@ export const binomialDistribution = (numberOfTrials: number) => {
         const calc3 = Math.pow(1 - p, numberOfTrials - k);
 
         // Calculate P(i heads)
-        const prob = (calc1 * calc2 * calc3);
+        const prob = (calc1 * calc2 * calc3).toFixed(3);
         distributionValues.set(k, prob);
     }
 

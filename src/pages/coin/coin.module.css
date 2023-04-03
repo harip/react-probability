@@ -1,3 +1,7 @@
+.main {
+  width: fit-content
+}
+
 .center {
     display: flex ;
     flex-direction: column;
@@ -33,14 +37,12 @@
 
 .binomial {
   display: flex ;
-  flex-direction: row;
-  padding: 4rem;
-  padding-bottom: 2rem;
+  flex-direction: row; 
   padding-top: 2rem;
   text-align: center; 
   align-items: top;
   flex-wrap: wrap;
-  row-gap: 4rem;
+  justify-content: center;
 }
 
 .divider {
@@ -51,10 +53,19 @@
   background-color: aqua;
 }
 
-.item {
-  margin-left: 2rem;
+.chartItem { 
+  width: 50%;
 }
 
 .coinSuccess {
   margin: 2rem;
+}
+
+@media (max-width: 600px) {
+  .binomial {
+    justify-content: center;
+  }
+  .chartItem {
+    width: 100%;
+  }
 }
