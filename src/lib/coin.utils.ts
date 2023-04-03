@@ -66,3 +66,9 @@ export const getCoinFlipCombinations = (numberOfFlips: number) => {
     }
     return combinations;
 }
+
+export const getExperimentationProbabilty = (totalCombinations: Array<string>, numberOfHeads: number) => {
+    const successHeads = totalCombinations.filter(c=> c.split('H').length-1 === numberOfHeads).length;
+    const probability = (successHeads/totalCombinations.length).toFixed(3);
+    return probability;
+}

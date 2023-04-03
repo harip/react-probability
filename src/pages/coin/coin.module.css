@@ -48,8 +48,7 @@
 .divider {
   display: flex ;
   flex-direction: row;  
-  margin-left: 4rem;
-  margin-right: 4rem;
+  margin: 2rem;
   background-color: aqua;
 }
 

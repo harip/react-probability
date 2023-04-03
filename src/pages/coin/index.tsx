@@ -16,7 +16,8 @@ import { RootState, CoinProbabilityState } from '../../store/types';
 import { BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar, ResponsiveContainer } from "recharts";
 import {
     binomialDistribution,
-    getCoinFlipCombinations
+    getCoinFlipCombinations,
+    getExperimentationProbabilty
 } from "../../lib/coin.utils";
 
 interface ChartDataItem {
@@ -33,6 +34,7 @@ const CoinComponent = () => {
         return state.coin.numberOfTrials;
     });
     const [selectedOutcome,setSelectedOutcome] = useState<ChartDataItem>();
+    const [selectedHeads,setSelectedHeads] = useState<number>(0);
 
     const numberOfFlips = useSelector((state: RootState) => {
         return state.coin.numberOfFlips;
@@ -67,6 +69,10 @@ const CoinComponent = () => {
         if (e?.activePayload?.length>0) {
             setSelectedOutcome(e.activePayload[0]?.payload);
         }
+    }
+
+    const onSelectHeads = (event: any, value: any) => {
+        setSelectedHeads(value);
     }
 
     const drawChart = () => {
@@ -166,45 +172,35 @@ const CoinComponent = () => {
                 </Card>
             </div>
 
-            {/* <div className={styles.divider}>
+            <div className={styles.divider}>
                 <Divider />
             </div>
 
             <div className={styles.binomial}>
-                <div  >
-                    <Box sx={{ height: 300 }}>
-                        <Slider
-                            aria-label="Temperature"
-                            defaultValue={3}
-                            onChange={(e, v) => onNumberOfFlips(e, v)}
-                            valueLabelDisplay="auto"
-                            step={1}
-                            marks
-                            min={2}
-                            max={10}
-                            orientation="vertical"
-                            sx={{
-                                '& input[type="range"]': {
-                                    WebkitAppearance: 'slider-vertical',
-                                },
-                            }}
-                        />
-                    </Box>
-                    <div>
-                        {`${numberOfFlips}`}
-                    </div>
-                </div>
-                <Card sx={{ minWidth: 500, maxWidth: 500 }} className={styles.item}>
+
+                <Card  className={styles.chartItem}>
                     <CardHeader
-                        title="Coin Flip Combinations"
+                        title="Experimentation"
+                        subheader={`number of flips : ${numberOfFlips}`}
                     />
                     <CardContent>
+                        <Box  >
+                            <Slider
+                                defaultValue={2}
+                                onChange={(e, v) => onNumberOfFlips(e, v)}
+                                valueLabelDisplay="auto"
+                                step={1}
+                                marks
+                                min={2}
+                                max={50}
+                            />
+                        </Box>
+                        <div className={styles.divider}>
+                            <Divider />
+                        </div>     
                         <Typography>
-                            {`number of flips : ${numberOfFlips}`}
-                        </Typography>
-                        <Typography>
-                            total combinations {coinFlipCombos.length}
-                        </Typography>
+                            total combinations = {coinFlipCombos.length}
+                        </Typography>                                           
                         {
                             coinFlipCombos.map((c, i) => {
                                 return <Chip label={`${c}`} variant="outlined" color="primary" key={`chip-allcombo-${i}`} />
@@ -212,27 +208,35 @@ const CoinComponent = () => {
                         }
                     </CardContent>
                 </Card>
-                <Card sx={{ minWidth: 345 }} className={styles.item}>
+
+                <Card  sx={{ maxWidth: 345 }} className={styles.chartItem}>
+                    <CardHeader
+                        title="Probability"
+                    />
                     <CardContent>
-                        <Box sx={{ height: 400 }} className={styles.item}>
+                        <Box  >
                             <Slider
-                                aria-label="Temperature"
                                 defaultValue={2}
-                                onChange={(e, v) => onNumberOfTrialsChange(e, v)}
+                                onChange={(e, v) => onSelectHeads(e, v)}
                                 valueLabelDisplay="auto"
                                 step={1}
                                 marks
-                                min={2}
-                                max={10}
+                                min={0}
+                                max={numberOfFlips}
                             />
+                            Select number of heads
                         </Box>
-                        <Typography variant="subtitle2">
-                            The probability of getting 2 heads in n coin flips is the bar height at x-axis = 2
-                        </Typography>
+                        <div className={styles.divider}>
+                            <Divider />
+                        </div>     
+                        <Typography>
+                            Probability of getting {selectedHeads} heads
+                            when coin is flipped {numberOfFlips} times(s)
+                            is {getExperimentationProbabilty(coinFlipCombos, selectedHeads)}
+                        </Typography> 
                     </CardContent>
                 </Card>
-            </div> */}
-
+            </div>
         </div>
     )
 }
