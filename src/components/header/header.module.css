@@ -1,0 +1,12 @@
+.appbartitle {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.title {
+    display: flex ;
+    flex-direction: column;
+    justify-content: left;
+    position: relative; 
+    text-align: left;
+}

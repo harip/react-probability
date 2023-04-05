@@ -1,19 +1,18 @@
 import { Box, Chip, Divider, Slider, Checkbox, AppBar, Button, Toolbar, Link } from "@mui/material";
-import { useMemo, useState } from "react";
-import { useRouter } from "next/router";
-import Typography from '@mui/material/Typography';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useMemo, useState } from "react"; 
+import Typography from '@mui/material/Typography'; 
 import DiceComponent from "./components/dice";
 import OutcomeDisplayComponent from "./components/outcome-display";
 import styles from './dice.module.css'
 import { getProbabilityInfo } from "../../lib/dice.utils";
+import { HeaderComponentProps } from "@/lib/models/HeaderModel";
+import HeaderComponent from "@/components/header";
 
 const DiceProbabilityComponent = () => {
     const [dice, setDice] = useState(1);
     const [sum, setSum] = useState(1);
     const [showAllOutcomes, setShowAllOutcomes] = useState<boolean>(false);
-    const [showDiceValues, setShowDiceValues] = useState<[]>([]);
-    const router = useRouter();
+    const [showDiceValues, setShowDiceValues] = useState<[]>([]); 
 
     const getProbablityCalculations = useMemo(
         () => getProbabilityInfo(dice, sum),
@@ -45,11 +44,7 @@ const DiceProbabilityComponent = () => {
         });
         return outcomes;
     }
-
-    function navigateToNextPage() {
-        router.push('coin');
-    }
-
+ 
     const onOutcomeClick = (data: any) => {
         setShowDiceValues(data)
     }
@@ -58,20 +53,18 @@ const DiceProbabilityComponent = () => {
         return showAllOutcomes && dice <= 4;
     }
 
+    const getHeaderData = ():HeaderComponentProps => {
+        return {
+            nextComponent: 'coin',
+            title: 'Dice Probability'
+        }
+    }
+
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
         <>
             <div className={styles.title}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <Typography variant="h3" component="div" sx={{ flexGrow: 1 }} className={styles.appbartitle}>
-                                Dice Probability
-                        </Typography>
-                        <Button color="inherit" onClick={navigateToNextPage}>
-                            <ArrowForwardIcon fontSize='large' />
-                        </Button>
-                    </Toolbar>
-                </AppBar>
+                <HeaderComponent {...getHeaderData()}></HeaderComponent>
                 <div>
                     <Typography variant="subtitle2"  >
                         Component State/Local State

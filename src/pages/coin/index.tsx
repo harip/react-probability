@@ -1,13 +1,9 @@
 import { Box, Chip, Divider, Slider, Checkbox, AppBar, Button, Toolbar, Tooltip, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Typography from '@mui/material/Typography';
-import { useRouter } from "next/router";
+import Typography from '@mui/material/Typography'; 
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import styles from './coin.module.css'
 import { useDispatch } from "react-redux";
 import { setNumberOfFlips, setNumberOfTrails } from "../../store/coin-action";
@@ -19,6 +15,8 @@ import {
     getCoinFlipCombinations,
     getExperimentationProbabilty
 } from "../../lib/coin.utils";
+import { HeaderComponentProps } from "@/lib/models/HeaderModel";
+import HeaderComponent from "@/components/header";
 
 interface ChartDataItem {
     outcome: number,
@@ -26,7 +24,6 @@ interface ChartDataItem {
 }
 
 const CoinComponent = () => {
-    const router = useRouter();
     const dispatch = useDispatch();
     const [distributionValues, setDistributionValues] = useState<Map<number, string>>(new Map<number, string>());
     const [coinFlipCombos, setCoinFlipCombos] = useState<Array<string>>([])
@@ -48,14 +45,7 @@ const CoinComponent = () => {
     useEffect(() => {
         const coinFlipCombos = getCoinFlipCombinations(numberOfFlips);
         setCoinFlipCombos(coinFlipCombos);
-    }, [numberOfFlips])
-
-    const navigateToNextPage = () => {
-
-    }
-    const navigateToPreviousPage = () => {
-        router.push('dice');
-    }
+    }, [numberOfFlips]) 
 
     const onNumberOfTrialsChange = (event: any, value: any) => {
         dispatch(setNumberOfTrails(value))
@@ -111,24 +101,17 @@ const CoinComponent = () => {
         return numberOfFlips <= 10;
     }
 
+    const getHeaderData = ():HeaderComponentProps => {
+        return {
+            previousComponent: 'dice',
+            title: 'Coin Probablilty'
+        }
+    }
+
     return (
         <>
             <div className={styles.title}>
-                <AppBar position="static" >
-                    <Toolbar>
-                        <Button color="inherit" onClick={navigateToPreviousPage}>
-                            <ArrowBackIcon fontSize='large' />
-                        </Button>
-                        <Typography variant="h3" component="div" sx={{ flexGrow: 1 }} className={styles.appbartitle}>
-                            <div className={styles.title}>
-                                Coin Probablilty
-                            </div>
-                        </Typography>
-                        <Button color="inherit" onClick={navigateToNextPage}>
-                            <ArrowForwardIcon fontSize='large' />
-                        </Button>
-                    </Toolbar>
-                </AppBar>
+                <HeaderComponent {...getHeaderData()}></HeaderComponent>
                 <div>
                     <Typography variant="subtitle2"  >
                         Redux Store
