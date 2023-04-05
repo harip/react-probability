@@ -107,6 +107,10 @@ const CoinComponent = () => {
         )
     }
 
+    const showCombinations = () => {
+        return numberOfFlips <= 10;
+    }
+
     return (
         <>
             <div className={styles.title}>
@@ -209,10 +213,17 @@ const CoinComponent = () => {
                         <Typography>
                             total combinations = {coinFlipCombos.length}
                         </Typography>                                           
-                        {
-                            coinFlipCombos.map((c, i) => {
-                                return <Chip label={`${c}`} variant="outlined" color="primary" key={`chip-allcombo-${i}`} />
-                            })
+                        { showCombinations() && (
+                                coinFlipCombos.map((c, i) => {
+                                    return <Chip label={`${c}`} variant="outlined" color="primary" key={`chip-allcombo-${i}`} />
+                                })
+                            )
+                        }
+                        { !showCombinations() && (
+                                <div>
+                                    Too many combinations to render
+                                </div>
+                            )
                         }
                     </CardContent>
                 </Card>

@@ -146,10 +146,17 @@ const DiceProbabilityComponent = () => {
                             onChange={(e) => setShowAllOutcomes(e.target.checked)} /> Show
                     </span>
                     {canShowAllOutcomes() && (
-                        <div >
-                            {createOutcomeDisplay(getProbablityCalculations.totalPossibleOutcomes, 'po')}
-                        </div>
-                    )
+                            <div >
+                                {createOutcomeDisplay(getProbablityCalculations.totalPossibleOutcomes, 'po')}
+                            </div>
+                        )
+                    }
+                    {
+                        !canShowAllOutcomes() && (
+                            <div>
+                                Too many combinations to render
+                            </div>
+                        )
                     }
                 </div>
             }
