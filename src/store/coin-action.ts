@@ -9,7 +9,7 @@ export type CoinActionTypes =  {
 } | {
     type: CoinActionTypesEnum.SET_NUMBER_OF_FLIPS
     data: number
-} ;
+};
 
 export function setNumberOfTrails(numberOfTrails: number) {
     return {

@@ -2,11 +2,13 @@ import { combineReducers,configureStore, ThunkAction, Action } from '@reduxjs/to
 import thunk from "redux-thunk";
 import coinReducer from './coin-reducer';
 import { RootState } from './types';
+import deckReducer from './deck/deck-reducer';
 
 const dummyReducer = (state:any={}) => state;
 
 const rootReducer = combineReducers<RootState>({
   coin: coinReducer,
+  deck: deckReducer,
   dummy: dummyReducer
 });
  
