@@ -131,6 +131,9 @@ const CoinComponent = () => {
                         Redux Store
                     </Typography>
                     <Link href="https://github.com/harip/react-probability/blob/904f6e2d7218a2796e92a3c14174504d19cdeb85/src/lib/coin.utils.ts#L38">Coin combinations algorithm</Link>
+                    <div>
+                        <Link href="https://github.com/harip/react-probability/blob/main/src/components/infinite-scroll/index.tsx">More Button Component</Link>
+                    </div>
                 </div>               
             </div>
 

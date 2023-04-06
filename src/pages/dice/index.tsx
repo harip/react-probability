@@ -80,7 +80,9 @@ const DiceProbabilityComponent = () => {
                         Component State/Local State
                     </Typography>
                     <Link href="https://github.com/harip/react-probability/blob/59d65cafa409355c888b8c37586266b3d9c6a06c/src/lib/dice.utils.ts#L18">Dice combinations algorithm</Link>
-                </div>
+                    <div>
+                        <Link href="https://github.com/harip/react-probability/blob/main/src/components/infinite-scroll/index.tsx">More Button Component</Link></div>
+                    </div>
             </div>
             <div className={styles.center}>
                 <div>
