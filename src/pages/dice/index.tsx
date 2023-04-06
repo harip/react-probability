@@ -1,4 +1,5 @@
 import { Box, Chip, Divider, Slider, Checkbox, AppBar, Button, Toolbar, Link } from "@mui/material";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useMemo, useState } from "react"; 
 import Typography from '@mui/material/Typography'; 
 import DiceComponent from "./components/dice";
@@ -6,13 +7,14 @@ import OutcomeDisplayComponent from "./components/outcome-display";
 import styles from './dice.module.css'
 import { getProbabilityInfo } from "../../lib/dice.utils";
 import { HeaderComponentProps } from "@/lib/models/HeaderModel";
-import HeaderComponent from "@/components/header";
+import HeaderComponent from "@/components/header"; 
+import InfiniteScrollComponent from "@/components/infinite-scroll";
+import { InfiniteScrollProps, InfiniteScrollItem } from "@/lib/models/InfiniteScrollModel";
 
 const DiceProbabilityComponent = () => {
     const [dice, setDice] = useState(1);
     const [sum, setSum] = useState(1);
-    const [showAllOutcomes, setShowAllOutcomes] = useState<boolean>(false);
-    const [showDiceValues, setShowDiceValues] = useState<[]>([]); 
+    const [showDiceValues, setShowDiceValues] = useState<[]>([]);
 
     const getProbablityCalculations = useMemo(
         () => getProbabilityInfo(dice, sum),
@@ -44,13 +46,22 @@ const DiceProbabilityComponent = () => {
         });
         return outcomes;
     }
+
+    function createInfiniteScrollData(data: any[][]) : InfiniteScrollProps {
+        const outcomes:Array<InfiniteScrollItem> = data.map((d, i) => {
+            return {
+                value: d
+            }
+        });
+        return {
+            items: outcomes,
+            onItemSelect: onOutcomeClick,
+            displayItemSize: 200
+        };   
+    }
  
     const onOutcomeClick = (data: any) => {
         setShowDiceValues(data)
-    }
-
-    const canShowAllOutcomes = () => {
-        return showAllOutcomes && dice <= 4;
     }
 
     const getHeaderData = ():HeaderComponentProps => {
@@ -60,7 +71,6 @@ const DiceProbabilityComponent = () => {
         }
     }
 
-    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
         <>
             <div className={styles.title}>
@@ -116,43 +126,42 @@ const DiceProbabilityComponent = () => {
             </div>
             <Divider />
             <div className={styles.center}>
-                <span className={styles.probability}>Probability of getting sum {sum} when {dice} dice are rolled = {getProbablityCalculations.probability}</span>
+                <div className={styles.probability}> 
+                    Probability of getting sum {sum} when {dice} dice are rolled = {getProbablityCalculations.probability}
+                </div>
+                <Typography variant="subtitle2" className= {styles.likelyEventItem}>
+                        {`(likely events/possible outcomes)=(${getProbablityCalculations.numberOfWaysEventCanOccur.length}/${getProbablityCalculations.totalPossibleOutcomes.length})`}
+                </Typography>
             </div>
             <Divider />
             {getProbablityCalculations &&
                 <div className={styles.center}>
-                    Number of ways event can occur - {getProbablityCalculations.numberOfWaysEventCanOccur.length}
+                    <Typography variant="h6" className= {styles.likelyEventItem}>
+                        Number of likely events
+                    </Typography>
+                    <Typography variant="subtitle2" className= {styles.likelyEventItem}>
+                        {<Chip color="primary" label= {`sum of ${sum}`} />} with 
+                        {' '}
+                        {<Chip color="primary" label= {`${dice} dice `} />} is
+                        {' '}
+                        {<Chip color="success" label= {getProbablityCalculations.numberOfWaysEventCanOccur.length} />}
+                    </Typography> 
                     <div>
                         {createOutcomeDisplay(getProbablityCalculations.numberOfWaysEventCanOccur, 'ev')}
                     </div>
                 </div>
             }
-            <Divider />
-            {getProbablityCalculations &&
-                <div className={styles.center}>
+            <Divider /> 
+            <div className={styles.center}>
+                <Typography variant="h6" className= {styles.likelyEventItem}>
                     Total possible outcomes - {getProbablityCalculations.totalPossibleOutcomes.length}
-                    <span >
-                        <Checkbox
-                            {...label}
-                            color="success"
-                            className={styles.success}
-                            onChange={(e) => setShowAllOutcomes(e.target.checked)} /> Show
-                    </span>
-                    {canShowAllOutcomes() && (
-                            <div >
-                                {createOutcomeDisplay(getProbablityCalculations.totalPossibleOutcomes, 'po')}
-                            </div>
-                        )
-                    }
-                    {
-                        !canShowAllOutcomes() && (
-                            <div>
-                                Too many combinations to render
-                            </div>
-                        )
-                    }
+                </Typography> 
+                <div>
+                    <InfiniteScrollComponent 
+                        {...createInfiniteScrollData(getProbablityCalculations.totalPossibleOutcomes)}
+                    />
                 </div>
-            }
+            </div> 
         </>
     )
 };

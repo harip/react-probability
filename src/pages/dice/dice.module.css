@@ -4,7 +4,7 @@
     justify-content:space-between;
     align-items: center;
     position: relative;
-    padding: 4rem;
+    padding: 1.5rem;
     text-align: center;
   }
   
@@ -21,6 +21,7 @@
   font-size: x-large;
   color: green;
   text-align: center;
+  background-color: aliceblue;
 }
 
 .title {
@@ -33,6 +34,10 @@
 
 .item{
   width: 100%
+}
+
+.likelyEventItem {
+  padding: 0.1rem;
 }
 
 .appbartitle {

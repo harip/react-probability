@@ -17,6 +17,8 @@ import {
 } from "../../lib/coin.utils";
 import { HeaderComponentProps } from "@/lib/models/HeaderModel";
 import HeaderComponent from "@/components/header";
+import { InfiniteScrollProps, InfiniteScrollItem } from "@/lib/models/InfiniteScrollModel";
+import InfiniteScrollComponent from "@/components/infinite-scroll";
 
 interface ChartDataItem {
     outcome: number,
@@ -99,7 +101,7 @@ const CoinComponent = () => {
 
     const showCombinations = () => {
         return numberOfFlips <= 10;
-    }
+    } 
 
     const getHeaderData = ():HeaderComponentProps => {
         return {
@@ -107,6 +109,18 @@ const CoinComponent = () => {
             title: 'Coin Probablilty'
         }
     }
+
+    function createInfiniteScrollData(data: any[]) : InfiniteScrollProps {
+        const outcomes:Array<InfiniteScrollItem> = data.map((d, i) => {
+            return {
+                value: d
+            }
+        });
+        return {
+            items: outcomes,
+            displayItemSize: 200
+        };   
+    }    
 
     return (
         <>
@@ -187,7 +201,7 @@ const CoinComponent = () => {
                                 step={1}
                                 marks
                                 min={2}
-                                max={50}
+                                max={20}
                             />
                         </Box>
                         <div className={styles.divider}>
@@ -195,20 +209,13 @@ const CoinComponent = () => {
                         </div>     
                         <Typography>
                             total combinations = {coinFlipCombos.length}
-                        </Typography>                                           
-                        { showCombinations() && (
-                                coinFlipCombos.map((c, i) => {
-                                    return <Chip label={`${c}`} variant="outlined" color="primary" key={`chip-allcombo-${i}`} />
-                                })
-                            )
-                        }
-                        { !showCombinations() && (
-                                <div>
-                                    Too many combinations to render
-                                </div>
-                            )
-                        }
-                    </CardContent>
+                        </Typography>
+                        <div>
+                            <InfiniteScrollComponent 
+                                {...createInfiniteScrollData(coinFlipCombos)}
+                            />
+                        </div>                                                                   
+                     </CardContent>
                 </Card>
 
                 <Card  sx={{ maxWidth: 345 }} className={styles.chartItem}>
