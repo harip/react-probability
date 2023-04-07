@@ -10,3 +10,13 @@
     position: relative; 
     text-align: left;
 }
+
+.navButton {
+    display: flex ;
+    flex-direction: column;
+    text-align: center;
+}
+
+.home {
+    background: white;
+}

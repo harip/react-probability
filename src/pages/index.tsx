@@ -1,8 +1,11 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css' 
-import DiceProbabilityComponent from './dice'
+import styles from '@/styles/Home.module.css'
+import { Typography } from '@mui/material' 
+import homePageData from '@/lib/home.page'
+import { Component } from '@/lib/models/HomePageModel'
+import HomePageComponent from './home'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,8 +19,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <div className={styles.description}>
+          <p>
+            {/* Get started by editing&nbsp;
+            <code className={styles.code}>src/pages/index.tsx</code> */}
+          </p>
+        </div>
+
         <div className={styles.center}>
-          <DiceProbabilityComponent/>
+          <HomePageComponent/>
+        </div>
+
+        <div className={styles.grid}>
         </div>
       </main>
     </>
