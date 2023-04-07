@@ -14,10 +14,14 @@ import { Component } from "@/lib/models/HomePageModel";
 import styles from "./home.module.css";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CasinoIcon from '@mui/icons-material/Casino'; 
+import HomeIcon from '@mui/icons-material/Home';
 
 const HomePageComponent = () => {
   const handleListItemClick = (item: string) => {
     router.push(item);
+  }
+  const handleHomeClick = () => {
+    router.push('https://harip.github.io/site/#/projects');
   }
 
   return (
@@ -39,7 +43,9 @@ const HomePageComponent = () => {
           }
         />
       </ListItemButton>
+
       <Divider variant="inset" component="li" />
+
       <ListItemButton 
         alignItems="flex-start" 
         onClick={() => handleListItemClick('coin')}
@@ -51,12 +57,28 @@ const HomePageComponent = () => {
           primary="Coin Probability"
           secondary={
             <React.Fragment>
-              {"Interactively explore the probability of getting heads when flipping coin"}
+              {"Interactively explore the probability of getting heads when flipping a coin"}
             </React.Fragment>
           }
         />
       </ListItemButton>
+
       <Divider variant="inset" component="li" />
+      <ListItemButton 
+        alignItems="flex-start" 
+        onClick={() => handleHomeClick()}
+      >
+        <ListItemAvatar> 
+        </ListItemAvatar>
+        <ListItemText 
+          secondary={
+            <React.Fragment>
+              <HomeIcon fontSize="large" />
+            </React.Fragment>
+          }
+        />
+      </ListItemButton>
+
     </List>
   );
 };
