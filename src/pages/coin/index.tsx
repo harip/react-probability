@@ -143,8 +143,8 @@ const CoinComponent = () => {
 
     const getProbabilityDisplayText = () => {
         const prob = getExperimentationProbabilty(coinFlipCombos, selectedHeads);
-        return `Probability of getting ${selectedHeads} heads
-        when coin is flipped ${numberOfFlips} time(s)
+        return `P(head=${selectedHeads}) 
+        in ${numberOfFlips} flips
         is ${prob}`;
     }
 
@@ -152,8 +152,7 @@ const CoinComponent = () => {
         if (!selectedOutcome) {
             return 'Click bar to get probability';
         }
-        return `The probability of getting ${selectedOutcome?.outcome} 
-        head in ${numberOfTrials} coin flips is ${selectedOutcome?.probability}`;
+        return `P(head=${selectedOutcome?.outcome}) in ${numberOfTrials} flips is ${selectedOutcome?.probability}`;
     }
 
     return (
@@ -191,7 +190,7 @@ const CoinComponent = () => {
                             Number of coin flips - {numberOfTrials}
 
                             <div>
-                                <Chip color="success" label={getBinomialProbabilityText()} />
+                                <Chip color="success" label={getBinomialProbabilityText()} style={{ whiteSpace: 'normal' }}/>
                             </div>
                         </Item>
 

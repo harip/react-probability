@@ -9,9 +9,6 @@ import {
   ListItemText, 
   Typography 
 } from "@mui/material";
-import homePageData from "@/lib/home.page";
-import { Component } from "@/lib/models/HomePageModel";
-import styles from "./home.module.css";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CasinoIcon from '@mui/icons-material/Casino'; 
 import HomeIcon from '@mui/icons-material/Home'; 

@@ -200,6 +200,10 @@
       );
       z-index: 1;
     }
+
+    .main {
+      padding: 2rem;
+    }
   }
   
   /* Tablet and Smaller Desktop */

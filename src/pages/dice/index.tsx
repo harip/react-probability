@@ -79,6 +79,19 @@ const DiceProbabilityComponent = () => {
         }
     }
 
+    const diceMarks = [
+        {
+            value: 1,
+            label: `dice ${dice}`,
+        }
+    ];
+    const sumMarks = [
+        {
+            value: 1,
+            label: `sum ${sum}`,
+        }
+    ];
+
     return (
         <>
             <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
@@ -97,37 +110,37 @@ const DiceProbabilityComponent = () => {
                     >
                         <Item sx={{ width: { xs: '100%', lg: '100%' } }}>
                             {createDice()}
-                            <Slider
-                                defaultValue={1}
-                                onChange={(e, v) => onDiceSliderChange(e, v)}
-                                valueLabelDisplay="auto"
-                                step={1}
-                                marks
-                                min={1}
-                                max={6}
-                            />
-                            Number of dice - {dice}
-                        </Item>
+                            <div className={styles.slider}>
+                                <Slider
+                                    defaultValue={1}
+                                    onChange={(e, v) => onDiceSliderChange(e, v)}
+                                    valueLabelDisplay="auto"
+                                    step={1}
+                                    marks={diceMarks}
+                                    min={1}
+                                    max={6}
+                                />
+                            </div> 
 
-                        <Item sx={{ width: { xs: '100%', lg: '100%' } }}>
-                            <Slider
-                                aria-label="Sum"
-                                defaultValue={1}
-                                valueLabelDisplay="auto"
-                                onChange={onDiceSumSliderChange}
-                                step={1}
-                                marks
-                                min={1}
-                                max={dice * 6}
-                            />
-                            Sum of rolled dice - {sum}
-                        </Item>
-                        <Item sx={{ width: { xs: '100%', lg: '100%' } }}>
+                            <div className={styles.slider}>
+                                <Slider
+                                    aria-label="Sum"
+                                    defaultValue={1}
+                                    valueLabelDisplay="auto"
+                                    onChange={onDiceSumSliderChange}
+                                    step={1}
+                                    marks ={sumMarks}
+                                    min={1}
+                                    max={dice * 6}
+                                />
+                            </div>    
+
                             Probability of getting sum {sum} when {dice} dice are rolled = {getProbablityCalculations.probability}
                             <Typography variant="subtitle2" className={styles.likelyEventItem}>
                                 {`(likely events/possible outcomes)=(${getProbablityCalculations.numberOfWaysEventCanOccur.length}/${getProbablityCalculations.totalPossibleOutcomes.length})`}
-                            </Typography>
-                        </Item>
+                            </Typography>                       
+                        </Item> 
+
 
                         <Item sx={{ width: { xs: '100%', lg: '100%' } }}>
                             <Typography variant="h6" className={styles.likelyEventItem}>

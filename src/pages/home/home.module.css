@@ -30,18 +30,24 @@
   transform: translateZ(0);
 }
 
-  .logo {
-    position: relative;
-  }
+.logo {
+  position: relative;
+}
 
-  .component {
-    display: flex;
-    flex-direction: row;
-  }
+.component {
+  display: flex;
+  flex-direction: row;
+}
 
-  .allComponent {
-    display: flex;
-    flex-direction: column;
-    font-size: xx-large;
-    justify-content: space-around;
+.allComponent {
+  display: flex;
+  flex-direction: column;
+  font-size: xx-large;
+  justify-content: space-around;
+}
+
+@media (max-width: 700px) {
+  .main {
+    padding: 1rem;
   }
+}
