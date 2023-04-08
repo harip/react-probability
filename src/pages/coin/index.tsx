@@ -1,9 +1,6 @@
-import { Box, Chip, Divider, Slider, Checkbox, AppBar, Button, Toolbar, Tooltip, Link } from "@mui/material";
+import { Box, Chip, Divider, Slider, Checkbox, AppBar, Button, Toolbar, Tooltip, Link, Container, Paper, Stack, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Typography from '@mui/material/Typography'; 
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 import styles from './coin.module.css'
 import { useDispatch } from "react-redux";
 import { setNumberOfFlips, setNumberOfTrails } from "../../store/coin-action";
@@ -15,15 +12,24 @@ import {
     getCoinFlipCombinations,
     getExperimentationProbabilty
 } from "../../lib/coin.utils";
-import { HeaderComponentProps } from "@/lib/models/HeaderModel";
-import HeaderComponent from "@/components/header";
+import { HeaderComponentProps } from "@/lib/models/HeaderModel"; 
 import { InfiniteScrollProps, InfiniteScrollItem } from "@/lib/models/InfiniteScrollModel";
 import InfiniteScrollComponent from "@/components/infinite-scroll";
+import ToolBarComponent from "@/components/toolbar";
+import dice from "../dice";
 
 interface ChartDataItem {
     outcome: number,
     probability: string
 }
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
 
 const CoinComponent = () => {
     const dispatch = useDispatch();
@@ -32,8 +38,8 @@ const CoinComponent = () => {
     const numberOfTrials = useSelector((state: RootState) => {
         return state.coin.numberOfTrials;
     });
-    const [selectedOutcome,setSelectedOutcome] = useState<ChartDataItem>();
-    const [selectedHeads,setSelectedHeads] = useState<number>(0);
+    const [selectedOutcome, setSelectedOutcome] = useState<ChartDataItem>();
+    const [selectedHeads, setSelectedHeads] = useState<number>(0);
 
     const numberOfFlips = useSelector((state: RootState) => {
         return state.coin.numberOfFlips;
@@ -47,7 +53,7 @@ const CoinComponent = () => {
     useEffect(() => {
         const coinFlipCombos = getCoinFlipCombinations(numberOfFlips);
         setCoinFlipCombos(coinFlipCombos);
-    }, [numberOfFlips]) 
+    }, [numberOfFlips])
 
     const onNumberOfTrialsChange = (event: any, value: any) => {
         dispatch(setNumberOfTrails(value))
@@ -58,7 +64,7 @@ const CoinComponent = () => {
     }
 
     const onBinomailChartClick = (e: any) => {
-        if (e?.activePayload?.length>0) {
+        if (e?.activePayload?.length > 0) {
             setSelectedOutcome(e.activePayload[0]?.payload);
         }
     }
@@ -101,17 +107,17 @@ const CoinComponent = () => {
 
     const showCombinations = () => {
         return numberOfFlips <= 10;
-    } 
+    }
 
-    const getHeaderData = ():HeaderComponentProps => {
+    const getHeaderData = (): HeaderComponentProps => {
         return {
             previousComponent: 'dice',
             title: 'Coin Probablilty'
         }
     }
 
-    function createInfiniteScrollData(data: any[]) : InfiniteScrollProps {
-        const outcomes:Array<InfiniteScrollItem> = data.map((d, i) => {
+    function createInfiniteScrollData(data: any[]): InfiniteScrollProps {
+        const outcomes: Array<InfiniteScrollItem> = data.map((d, i) => {
             return {
                 value: d
             }
@@ -119,136 +125,129 @@ const CoinComponent = () => {
         return {
             items: outcomes,
             displayItemSize: 200
-        };   
-    }    
+        };
+    }
+
+    const flipMarks = [
+        {
+            value: 2,
+            label: `flips ${numberOfFlips}`,
+        }
+    ];
+    const headMarks = [
+        {
+            value: 0,
+            label: `heads ${selectedHeads}`,
+        }
+    ];
+
+    const getProbabilityDisplayText = () => {
+        const prob = getExperimentationProbabilty(coinFlipCombos, selectedHeads);
+        return `Probability of getting ${selectedHeads} heads
+        when coin is flipped ${numberOfFlips} time(s)
+        is ${prob}`;
+    }
+
+    const getBinomialProbabilityText = () => {
+        if (!selectedOutcome) {
+            return 'Click bar to get probability';
+        }
+        return `The probability of getting ${selectedOutcome?.outcome} 
+        head in ${numberOfTrials} coin flips is ${selectedOutcome?.probability}`;
+    }
 
     return (
         <>
-            <div className={styles.title}>
-                <HeaderComponent {...getHeaderData()}></HeaderComponent>
-                <div>
-                    <Typography variant="subtitle2"  >
-                        Redux Store
+            <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+                <ToolBarComponent {...getHeaderData()} />
+                <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }} className={styles.mainCard}>
+                    <Typography component="h1" variant="h4" align="center">
+                        Coin Probability
                     </Typography>
-                    <Link href="https://github.com/harip/react-probability/blob/904f6e2d7218a2796e92a3c14174504d19cdeb85/src/lib/coin.utils.ts#L38">Coin combinations algorithm</Link>
-                    <div>
-                        <Link href="https://github.com/harip/react-probability/blob/main/src/components/infinite-scroll/index.tsx">More Button Component</Link>
-                    </div>
-                </div>               
-            </div>
 
-            <div className={styles.binomial}>
-                <Card  className={styles.chartItem}>
-                    <CardHeader
-                        title="Binomial Distribution"
-                        subheader={`number of trials : ${numberOfTrials}`}
-                    />
-                    <CardContent>
-                        {
-                            distributionValues && drawChart()
-                        }
-                        <Typography>
-                            Number of successful heads
-                        </Typography>
-                        <div className={styles.divider}>
-                            <Divider />
-                        </div>
-                        <Box  >
-                            <Slider
-                                defaultValue={2}
-                                onChange={(e, v) => onNumberOfTrialsChange(e, v)}
-                                valueLabelDisplay="auto"
-                                step={1}
-                                marks
-                                min={2}
-                                max={50}
-                            />
-                        </Box> 
-                        <Typography>
-                            Number of coin flips
-                        </Typography>
-                    </CardContent>
-                </Card>
-                <Card sx={{ maxWidth: 345 }} className={styles.item}>
-                    <CardHeader
-                        title="Click on bar to know probability"
-                    />
-                    <CardContent>
-                        {  selectedOutcome && 
-                            (<Typography variant="subtitle2">
-                                The probability of getting {selectedOutcome.outcome} 
-                                {numberOfTrials > 1 ? ' heads' : ' head'} in {numberOfTrials} coin flips is {` ${selectedOutcome.probability}`} (bar height at x-axis = {selectedOutcome.outcome})
-                            </Typography>)
-                        }
-                    </CardContent>
-                </Card>
-            </div>
+                    <Stack
+                        spacing={{ xs: 1, sm: 2 }}
+                        direction={{ xs: 'column', lg: 'column' }}
+                        useFlexGap
+                        flexWrap={{ xs: 'wrap', lg: 'nowrap' }}
+                        sx={{ '& > *': { flexGrow: 1 }, alignItems: { lg: 'center' } }}
+                    >
+                        <Item sx={{ width: { xs: '100%', lg: '100%' } }}>
+                            Probability by Binomial Distribution
+                            {
+                                distributionValues && drawChart()
+                            }
+                            <div className={styles.slider}>
+                                <Slider
+                                    defaultValue={2}
+                                    onChange={(e, v) => onNumberOfTrialsChange(e, v)}
+                                    valueLabelDisplay="auto"
+                                    step={1}
+                                    marks
+                                    min={2}
+                                    max={50}
+                                />
+                            </div>
+                            Number of coin flips - {numberOfTrials}
 
-            <div className={styles.divider}>
-                <Divider />
-            </div>
+                            <div>
+                                <Chip color="success" label={getBinomialProbabilityText()} />
+                            </div>
+                        </Item>
 
-            <div className={styles.binomial}>
+                        <Item sx={{ width: { xs: '100%', lg: '100%' } }}>
+                            Probability by Experimentation
+                            <div className={styles.slider}>
+                                <Slider
+                                    defaultValue={2}
+                                    onChange={(e, v) => onNumberOfFlips(e, v)}
+                                    valueLabelDisplay="auto"
+                                    step={1}
+                                    marks={flipMarks}
+                                    min={2}
+                                    max={20}
+                                />
+                            </div>
 
-                <Card  className={styles.chartItem}>
-                    <CardHeader
-                        title="Experimentation"
-                        subheader={`number of flips : ${numberOfFlips}`}
-                    />
-                    <CardContent>
-                        <Box  >
-                            <Slider
-                                defaultValue={2}
-                                onChange={(e, v) => onNumberOfFlips(e, v)}
-                                valueLabelDisplay="auto"
-                                step={1}
-                                marks
-                                min={2}
-                                max={20}
-                            />
-                        </Box>
-                        <div className={styles.divider}>
-                            <Divider />
-                        </div>     
-                        <Typography>
-                            total combinations = {coinFlipCombos.length}
-                        </Typography>
-                        <div>
-                            <InfiniteScrollComponent 
-                                {...createInfiniteScrollData(coinFlipCombos)}
-                            />
-                        </div>                                                                   
-                     </CardContent>
-                </Card>
+                            <div className={styles.slider}>
+                                <Slider
+                                    defaultValue={2}
+                                    onChange={(e, v) => onSelectHeads(e, v)}
+                                    valueLabelDisplay="auto"
+                                    step={1}
+                                    marks={headMarks}
+                                    min={0}
+                                    max={numberOfFlips}
+                                />
+                            </div>
 
-                <Card  sx={{ maxWidth: 345 }} className={styles.chartItem}>
-                    <CardHeader
-                        title="Probability"
-                    />
-                    <CardContent>
-                        <Box  >
-                            <Slider
-                                defaultValue={2}
-                                onChange={(e, v) => onSelectHeads(e, v)}
-                                valueLabelDisplay="auto"
-                                step={1}
-                                marks
-                                min={0}
-                                max={numberOfFlips}
-                            />
-                            Select number of heads
-                        </Box>
-                        <div className={styles.divider}>
-                            <Divider />
-                        </div>     
-                        <Typography>
-                            Probability of getting {selectedHeads} heads
-                            when coin is flipped {numberOfFlips} times(s)
-                            is {getExperimentationProbabilty(coinFlipCombos, selectedHeads)}
-                        </Typography> 
-                    </CardContent>
-                </Card>
-            </div>
+                            <div>
+                                <Chip color="success" label={getProbabilityDisplayText()} />
+                            </div>
+
+                            <Divider className={styles.divider} />
+                            <Typography>
+                                Total combinations = {coinFlipCombos.length}
+                            </Typography>
+                            <div>
+                                <InfiniteScrollComponent
+                                    {...createInfiniteScrollData(coinFlipCombos)}
+                                />
+                            </div>
+                        </Item>
+
+                        <Item sx={{ width: { xs: '100%', lg: '100%' } }}>
+                            <Typography variant="subtitle2"  >
+                                Redux Store
+                            </Typography>
+                            <Link href="https://github.com/harip/react-probability/blob/904f6e2d7218a2796e92a3c14174504d19cdeb85/src/lib/coin.utils.ts#L38">Coin combinations algorithm</Link>
+                            <div>
+                                <Link href="https://github.com/harip/react-probability/blob/main/src/components/infinite-scroll/index.tsx">More Button Component</Link>
+                            </div>
+                        </Item> 
+                    </Stack>
+                </Paper>
+            </Container> 
         </>
     )
 }

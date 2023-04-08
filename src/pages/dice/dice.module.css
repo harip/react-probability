@@ -14,7 +14,7 @@
 }
 
 .dice {
-  font-size: 100px !important;
+  font-size: 50px !important;
 }
 
 .probability {
@@ -44,3 +44,8 @@
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+
+.mainCard {
+  margin-top: 0px !important;
+}
+
