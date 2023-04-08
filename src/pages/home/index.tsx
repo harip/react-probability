@@ -24,24 +24,6 @@ const HomePageComponent = () => {
   return (
 
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <ListItemButton 
-        alignItems="flex-start" 
-        onClick={() => handleListItemClick('dice')}
-      >
-        <ListItemAvatar>
-          <CasinoIcon fontSize="large" />
-        </ListItemAvatar>
-        <ListItemText
-          primary="Dice Probability"
-          secondary={
-            <React.Fragment>
-              {"Interactively explore the probability of rolling dice and attaining a specific value"}
-            </React.Fragment>
-          }
-        />
-      </ListItemButton>
-
-      <Divider variant="inset" component="li" />
 
       <ListItemButton 
         alignItems="flex-start" 
@@ -61,6 +43,26 @@ const HomePageComponent = () => {
       </ListItemButton>
 
       <Divider variant="inset" component="li" />
+
+      <ListItemButton 
+        alignItems="flex-start" 
+        onClick={() => handleListItemClick('dice')}
+      >
+        <ListItemAvatar>
+          <CasinoIcon fontSize="large" />
+        </ListItemAvatar>
+        <ListItemText
+          primary="Dice Probability"
+          secondary={
+            <React.Fragment>
+              {"Interactively explore the probability of rolling dice and attaining a specific value"}
+            </React.Fragment>
+          }
+        />
+      </ListItemButton>  
+
+      <Divider variant="inset" component="li" />
+      
       <ListItemButton 
         alignItems="flex-start" 
         onClick={() => handleHomeClick()}
