@@ -14,8 +14,7 @@ import { Component } from "@/lib/models/HomePageModel";
 import styles from "./home.module.css";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CasinoIcon from '@mui/icons-material/Casino'; 
-import HomeIcon from '@mui/icons-material/Home';
-import GitHubIcon from '@mui/icons-material/GitHub';
+import HomeIcon from '@mui/icons-material/Home'; 
 
 const HomePageComponent = () => {
   const handleListItemClick = (item: string) => {
@@ -75,7 +74,6 @@ const HomePageComponent = () => {
           secondary={
             <React.Fragment>
               <HomeIcon fontSize="large" />
-              <GitHubIcon fontSize="large" />
             </React.Fragment>
           }
         />
