@@ -112,7 +112,8 @@ const CoinComponent = () => {
     const getHeaderData = (): HeaderComponentProps => {
         return {
             previousComponent: 'dice',
-            title: 'Coin Probablilty'
+            title: 'Coin Probablilty',
+            nextComponent: 'deck'
         }
     }
 
@@ -210,7 +211,7 @@ const CoinComponent = () => {
 
                             <div className={styles.slider}>
                                 <Slider
-                                    defaultValue={2}
+                                    defaultValue={0}
                                     onChange={(e, v) => onSelectHeads(e, v)}
                                     valueLabelDisplay="auto"
                                     step={1}

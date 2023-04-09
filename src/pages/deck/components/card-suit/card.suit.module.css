@@ -1,0 +1,11 @@
+.deckCardSize {
+  display: flex;
+  flex-direction: row;
+  font-size: small;
+  flex-wrap: wrap;
+}
+
+.item {
+  margin: 0;
+  align-items: center;
+}
