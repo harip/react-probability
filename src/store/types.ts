@@ -12,8 +12,12 @@ export interface CoinProbabilityState {
 export interface DeckProbabilityState {
     numberOfDecks: number;
     deck: Deck;
+    removedItems : Deck;
 }
 
 export interface Deck {
-    numberOfCards: number;
+    spades: Array<string>;
+    clubs: Array<string>;
+    hearts: Array<string>;
+    diamonds: Array<string>;
 }

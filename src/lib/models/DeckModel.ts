@@ -13,15 +13,24 @@ export const enum SuitSymbols {
 };
 
 export interface SuiteCard {
-    cardName: string,
+    cardName: string;
     cardOrder: number;
 }
 
 export interface SuitSet {
-    suitSymbol: SuitSymbols,
-    suitCards: Array<SuiteCard>
+    suitSymbol: SuitSymbols;
+    suitCards: Array<SuiteCard>;
 }
 
 export interface CardSuitModel {
-    suitType : CardSuitType
+    suitType : CardSuitType;
+    displayItems? : Array<string>;
+    onItemClick? : Function;
+}
+
+export interface Card {
+    icon: any;
+    order: number;
+    cardName : string;
+    suitType: CardSuitType;
 }

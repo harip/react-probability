@@ -6,6 +6,10 @@ const CommonSuite: Array<string> = [
      "GiCardKing"
 ];
 
+export const getSuiteNames = (type: CardSuitType) =>{
+     return CommonSuite.map(c=>`${c}${type}`);
+}
+
 export const getAllSuites = ():Map<CardSuitType,SuitSet> => {
      const cardDeck = new Map<CardSuitType,SuitSet>();
      for (let suit in CardSuitType ) {
