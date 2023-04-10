@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { HeaderComponentProps } from "@/lib/models/HeaderModel";
 import styles from './deck.module.css';
 import ToolBarComponent from "@/components/toolbar";

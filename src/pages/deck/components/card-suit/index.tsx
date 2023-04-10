@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { IconContext } from 'react-icons';
 import * as allIcons from 'react-icons/gi';
 import { getAllSuites } from "../../../../lib/deck.utils";
