@@ -26,6 +26,7 @@ export interface CardSuitModel {
     suitType : CardSuitType;
     displayItems? : Array<string>;
     onItemClick? : Function;
+    sort?: boolean;
 }
 
 export interface Card {

@@ -1,7 +1,7 @@
 .deckCardSize {
   display: flex;
   flex-direction: row;
-  font-size: small;
+  font-size: large;
   flex-wrap: wrap;
 }
 

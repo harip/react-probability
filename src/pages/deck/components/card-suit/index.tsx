@@ -8,7 +8,8 @@ import { Card, CardSuitModel, SuitSet } from '@/lib/models/DeckModel';
 const CardSuitComponent: React.FC<CardSuitModel> = ({ 
     suitType, 
     displayItems,
-    onItemClick
+    onItemClick,
+    sort=true
 }) => {
     const allSuites = useMemo(() => getAllSuites(), []); 
     const [icons, setIcons] = useState<Array<Card>>([]);
@@ -30,7 +31,10 @@ const CardSuitComponent: React.FC<CardSuitModel> = ({
         }, []);
 
         // Sort
-        icons = icons.sort((a, b) => a.order - b.order);
+        if (sort) {
+            icons = icons.sort((a, b) => a.order - b.order);
+        }
+        
         setIcons(icons);
         setSuiteSet(suitSet);
     }, [displayItems])
