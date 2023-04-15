@@ -12,6 +12,7 @@ import { setDeck, setRemovedDeck } from "@/store/deck/deck-action";
 import { useState } from "react";
 import { CardMapper, getProbabiltyWithoutReplacement } from "@/lib/deck.utils";
 import { postUserEventData } from "../api/userevent.api";
+import { makeAPICall } from "../api/combinations.api";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -97,6 +98,20 @@ const DeckComponent = () => {
             </>
         );
     }
+
+    // const buttonClickHandler = () => {
+    //     console.log('sfsdfsdfsdfsdsddsfdsf')
+    //     const eventSource = new EventSource('http://localhost:4000/streams');
+        
+    //         eventSource.onmessage = (event: MessageEvent) => {
+    //         //   setOutput((prevOutput) => prevOutput + event.data + '\n');
+    //         console.log(event.data);
+    //         };
+        
+    //         eventSource.onerror = (event: Event) => {
+    //           console.error('EventSource error:', event);
+    //         };
+    // }
 
     return (
         <>
@@ -192,6 +207,7 @@ const DeckComponent = () => {
 
                 </Paper>
             </Container >
+            {/* <button  onClick={()=>buttonClickHandler()}>Get combinations</button> */}
         </>
     )
 }
