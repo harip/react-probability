@@ -1,0 +1,19 @@
+{
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "routes": [
+      {
+        "handle": "filesystem",
+        "source": "/",
+        "destination": "/app"
+      },
+      {
+        "handle": "http",
+        "source": "/permutations",
+        "destination": "http://localhost:4000/permutations",
+        "strip_path": false
+      }
+    ]
+  }
+  
