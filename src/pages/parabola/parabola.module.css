@@ -1,0 +1,15 @@
+.title {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    position: relative;
+    text-align: left;
+  }
+  
+  .mainCard {
+    margin-top: 0px !important;
+  }
+  
+  .titleBackground {
+    background-color: aliceblue;
+  }

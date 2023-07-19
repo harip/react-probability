@@ -99,31 +99,6 @@ const DeckComponent = () => {
         );
     }
 
-    const buttonClickHandler = () => {
-        console.log('sfsdfsdfsdfsdsddsfdsf')
-        const eventSource = new EventSource(
-            'https://bkqimjg4vvfildnvbo4ifezjru0qeugd.lambda-url.us-east-1.on.aws/',
-            {
-                headers: {
-                    'Content-Type': 'text/event-stream'
-                }
-            }
-        );
-        eventSource.onmessage = (event: MessageEvent) => {
-            //   setOutput((prevOutput) => prevOutput + event.data + '\n');
-            console.log(event.data);
-            if (!event.data) {
-
-                console.log('closing')
-                eventSource.close();
-            }
-        };
-        eventSource.onerror = (event: Event) => {
-            console.error('EventSource error:', event);
-            eventSource.close();
-        };
-    }
-
     return (
         <>
             <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
@@ -218,7 +193,6 @@ const DeckComponent = () => {
 
                 </Paper>
             </Container >
-            <button onClick={() => buttonClickHandler()}>Get combinations</button>
         </>
     )
 }
