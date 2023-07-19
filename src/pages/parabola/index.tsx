@@ -23,6 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const ParabolaComponent = () => {
+    // This is a stest
     function getHeaderData(): HeaderComponentProps {
         return {
             previousComponent: 'coin',
