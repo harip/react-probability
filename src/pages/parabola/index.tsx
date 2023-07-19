@@ -11,7 +11,8 @@ import {
 } from "@mui/material";
 import ToolBarComponent from "@/components/toolbar";
 import styles from './parabola.module.css';
-import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, Area, AreaChart } from "recharts";
+import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, Area, AreaChart, ScatterChart, ReferenceLine, Label } from "recharts";
+import { Scatter } from "recharts";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -30,33 +31,71 @@ const ParabolaComponent = () => {
     }
 
     const getChartData = () => {
-        const vals = Array.from({ length: 100 }, (_, i) => i - 50).map((x) => x);        
+        const vals = Array.from({ length: 10001 }, (_, i) => i - 5000).filter(x => x % 4 === 0).map((x) => x);
         return vals;
     };
 
     const drawChart = () => {
-        const data = getChartData().map((x) =>  {
+        const data = getChartData().map((x) => {
             return {
-                name: x, 
-                pv: x * x
+                x: x,
+                y: x * x
             }
         });
         return (
             <>
-                <ResponsiveContainer width="100%" height={200}>
-                    <AreaChart width={730} height={250} data={data}
-                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                        <defs>
-                            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                            <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
-                            </linearGradient>
-                        </defs>
-                        <XAxis dataKey="name" />
-                        <YAxis />
+                <ResponsiveContainer width="100%" height={300}>
+                    <LineChart
+                        width={500}
+                        height={300}
+                        margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                        }}
+                    >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
-                    </AreaChart>
+
+                        <XAxis
+                            dataKey="x"
+                            domain={['auto', 'auto']}
+                            interval={0}
+                            type="number"
+                            label={{
+                                key: 'xAxisLabel',
+                                value: 'x',
+                                position: 'bottom',
+                            }}
+                            allowDataOverflow={true}
+                            strokeWidth={1}
+                        />
+                        
+                        <ReferenceLine
+                            x={0}
+                            stroke="gray"
+                            strokeWidth={1.5}
+                            strokeOpacity={0.65}
+                        >
+                        </ReferenceLine>
+
+                        <ReferenceLine
+                            y={0}
+                            stroke="gray"
+                            strokeWidth={1.5}
+                            strokeOpacity={0.65}
+                        />
+
+                        <Line
+                            strokeWidth={2}
+                            data={data}
+                            dot={false}
+                            type="monotone"
+                            dataKey="y"
+                            stroke="black"
+                            tooltipType="none"
+                        />
+                    </LineChart>
                 </ResponsiveContainer>
             </>
         )
@@ -87,8 +126,6 @@ const ParabolaComponent = () => {
                                 drawChart()
                             }
                         </Item>
-
-                        
                     </Stack>
 
                 </Paper>
