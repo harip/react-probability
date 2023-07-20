@@ -12,7 +12,7 @@ import {
     Button
 } from "@mui/material";
 import ToolBarComponent from "@/components/toolbar";
-import styles from './parabola.module.css';
+import styles from './hyperbola.module.css';
 import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, Area, AreaChart, ScatterChart, ReferenceLine, Label } from "recharts";
 import { Scatter } from "recharts";
 
@@ -24,7 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-const ParabolaComponent = () => {
+const HyperbolaComponent = () => {
     const [chartData, setChartData] = React.useState<any[]>([]);
 
     const [intercept, setIntercept] = React.useState<number>(0);
@@ -65,15 +65,58 @@ const ParabolaComponent = () => {
     }
 
     const getChartData = () => {
+        const k=0;
+        const h=0;
+        const a = 4;
+        const b= 5;
+
         const vals = Array.from({ length: 2000 }, (_, i) => i - 1000).filter(x => x % 4 === 0).map((x) => x);
         const data = vals.map((x) => {
+            const y =  Math.sqrt(((Math.pow((x - h), 2) / Math.pow(a, 2) )-1)) * b + k;
             return {
                 x: x,
-                y: (quadCoefficient * ((x + quadReducer) * (x + quadReducer))) + intercept
+                y: y
             }
         });
-        return data;
+
+        vals.map((x) => {
+            const y =  -Math.sqrt(((Math.pow((x - h), 2) / Math.pow(a, 2) )-1)) * b + k;
+            data.push({
+                x: x,
+                y: y
+            })
+        });
+
+        const points = flattenHyperbola(a, b,100000);
+
+        return points;
     };
+
+    function flattenHyperbola(a: number, b: number, inf: number = 1000): { x: number, y: number }[] {
+        const points: { x: number, y: number }[] = [];
+        const a2 = a ** 2;
+        const b2 = b ** 2;
+      
+        let x: number, y: number, x2: number;
+      
+        for (x = inf; x > 0.1; x /= 2) {
+            console.log(x)
+          x2 = (a + x) ** 2;
+          y = -Math.sqrt(b2 * x2 / a2 - b2);
+          points.push({ x: a + x, y });
+        }
+      
+        points.push({ x: a, y: 0 });
+        console.log('x')
+        for (x = 0.1; x < inf; x *= 2) {
+            console.log(x)
+          x2 = (a + x) * (a + x);
+          y = Math.sqrt(b2 * x2 / a2 - b2);
+          points.push({ x: a + x, y });
+        }
+      
+        return points;
+      }
 
     const drawChart = () => {
         return (
@@ -106,7 +149,7 @@ const ParabolaComponent = () => {
                             strokeWidth={1}
                         />
 
-                        <YAxis domain={[-250000, 250000]} orientation="left" allowDataOverflow={true} />
+                        <YAxis domain={[-2000, 2500]} orientation="left" allowDataOverflow={true} />
 
                         <ReferenceLine
                             x={0}
@@ -167,14 +210,22 @@ const ParabolaComponent = () => {
         setQuadReducer(0);
     }
 
+    const getHyperbolaEquation = () => {
+        return (
+            <code>
+            <sup>(x - h)<sup>2</sup></sup>&frasl;<sub>(a<sup>2</sup>)</sub> - <sup>(y - k)<sup>2</sup></sup>&frasl;<sub>b<sup>2</sup></sub> = 1
+          </code>
+        );
+      };
+
     return (
         <>
             <Typography component="h1" variant="h4" align="center">
-                Parabola
+                Hyperbola
             </Typography>
 
             <div className={styles.equationHeader}>
-                <code>y = a(x+i)<sup>2</sup> + c</code>
+                {getHyperbolaEquation()}
                 {
                     trueEquation()
                 }
@@ -242,4 +293,4 @@ const ParabolaComponent = () => {
     )
 }
 
-export default ParabolaComponent;
+export default HyperbolaComponent;
