@@ -11,10 +11,9 @@ import {
     Slider,
     Button
 } from "@mui/material";
-import ToolBarComponent from "@/components/toolbar";
 import styles from './hyperbola.module.css';
 import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Legend, Line, Area, AreaChart, ScatterChart, ReferenceLine, Label } from "recharts";
-import { Scatter } from "recharts";
+import { getLeftVerticalParabola, getLinePoints } from "@/lib/conic.utils";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -26,44 +25,21 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const HyperbolaComponent = () => {
     const [chartData, setChartData] = React.useState<any[]>([]);
-
+    const [asymptote1, setAsymptote1] = React.useState<any[]>([]);
+    const [asymptote2, setAsymptote2] = React.useState<any[]>([]);
+    const [leftParabola, setLeftParabola] = React.useState<any[]>([]);
     const [intercept, setIntercept] = React.useState<number>(0);
     const [quadCoefficient, setQuadCoefficient] = React.useState<number>(1);
     const [quadReducer, setQuadReducer] = React.useState<number>(0);
 
     React.useEffect(() => {
-        setChartData(getChartData());
-    }, [intercept, quadCoefficient, quadReducer]);
-
-    const interceptMarks = [
-        {
-            value: intercept,
-            label: `c = ${intercept}`,
-        }
-    ];
-
-    const quadCoefficientMarks = [
-        {
-            value: quadCoefficient,
-            label: `a = ${quadCoefficient}`,
-        }
-    ];
-
-    const quadReducerMarks = [
-        {
-            value: quadReducer,
-            label: `i = ${quadReducer}`,
-        }
-    ];
-
-    // This is a stest
-    function getHeaderData(): HeaderComponentProps {
-        return {
-            previousComponent: 'coin',
-            title: 'Parabola'
-        }
-    }
-
+        const {data,a1, a2, leftParabola} = getChartData();
+        setChartData(data);
+        setAsymptote1(a1);
+        setAsymptote2(a2);
+        setLeftParabola(leftParabola);
+    }, [intercept, quadCoefficient, quadReducer]); 
+ 
     const getChartData = () => {
         const k=0;
         const h=0;
@@ -87,37 +63,19 @@ const HyperbolaComponent = () => {
             })
         });
 
-        const points = flattenHyperbola(a, b,100000);
+        // Asymptote 1
+        const a1 = getLinePoints(b,a,k);
+        const a2 = getLinePoints(-b,a,k);
 
-        return points;
+        // Left side of the hyperbola
+        const c = Math.sqrt(Math.pow(a,2) + Math.pow(b,2));
+        const leftVertex = {x: h-a, y: k};
+        const leftFoci = {x: h-c, y: k};
+        const leftParabola = getLeftVerticalParabola(leftVertex, leftFoci);
+
+        return {data, a1, a2, leftParabola};
     };
-
-    function flattenHyperbola(a: number, b: number, inf: number = 1000): { x: number, y: number }[] {
-        const points: { x: number, y: number }[] = [];
-        const a2 = a ** 2;
-        const b2 = b ** 2;
-      
-        let x: number, y: number, x2: number;
-      
-        for (x = inf; x > 0.1; x /= 2) {
-            console.log(x)
-          x2 = (a + x) ** 2;
-          y = -Math.sqrt(b2 * x2 / a2 - b2);
-          points.push({ x: a + x, y });
-        }
-      
-        points.push({ x: a, y: 0 });
-        console.log('x')
-        for (x = 0.1; x < inf; x *= 2) {
-            console.log(x)
-          x2 = (a + x) * (a + x);
-          y = Math.sqrt(b2 * x2 / a2 - b2);
-          points.push({ x: a + x, y });
-        }
-      
-        return points;
-      }
-
+ 
     const drawChart = () => {
         return (
             <>
@@ -166,13 +124,41 @@ const HyperbolaComponent = () => {
                             strokeOpacity={0.65}
                         />
 
-                        <Line
+                        {/* <Line
                             strokeWidth={2}
                             data={chartData}
                             dot={false}
                             type="monotone"
                             dataKey="y"
                             stroke="black"
+                            tooltipType="none"
+                        /> */}
+
+                        {/* <Line
+                            strokeWidth={2}
+                            data={asymptote1}
+                            dot={false}
+                            type="monotone"
+                            dataKey="y"
+                            stroke="red"
+                            tooltipType="none"
+                        /> */}
+                        <Line
+                            strokeWidth={2}
+                            data={asymptote2}
+                            dot={false}
+                            type="monotone"
+                            dataKey="y"
+                            stroke="red"
+                            tooltipType="none"
+                        />
+                        <Line
+                            strokeWidth={2}
+                            data={leftParabola}
+                            dot={false}
+                            type="monotone"
+                            dataKey="y"
+                            stroke="red"
                             tooltipType="none"
                         />
                     </LineChart>
@@ -182,7 +168,6 @@ const HyperbolaComponent = () => {
     }
 
     const trueEquation = () => {
-        
         const xTerm = quadReducer === 0
             ? (<code>x</code>)
             : (<code>(x{quadReducer >= 0 ? '+' : '-'}{Math.abs(quadReducer)})</code>)
@@ -192,16 +177,6 @@ const HyperbolaComponent = () => {
                 <code> {quadTerm} {intercept >= 0 ? '+' : '-'} {Math.abs(intercept)}</code>
             </>
         );
-    }
-
-    function onConstantChange(event: any, value: any) {
-        setIntercept(value);
-    }
-    function onQuadCoefficientChange(event: any, value: any) {
-        setQuadCoefficient(value);
-    }
-    function onQuadReducerChange(event: any, value: any) {
-        setQuadReducer(value);
     }
 
     const handleReset = () => {
@@ -243,52 +218,13 @@ const HyperbolaComponent = () => {
                         drawChart()
                     }
                 </Item>
-
-                <Item sx={{ width: { xs: '100%', lg: '100%' } }}>
-                    <div className={styles.slider}>
-                        <Slider
-                            defaultValue={0}
-                            onChange={(e, v) => onConstantChange(e, v)}
-                            valueLabelDisplay="auto"
-                            step={50}
-                            min={-50000}
-                            max={50000}
-                            marks={interceptMarks}
-                        />
-                    </div>
-
-                    <div className={styles.slider}>
-                        <Slider
-                            defaultValue={1}
-                            onChange={(e, v) => onQuadCoefficientChange(e, v)}
-                            valueLabelDisplay="auto"
-                            step={0.1}
-                            min={-3}
-                            max={3}
-                            marks={quadCoefficientMarks}
-                        />
-                    </div>
-
-                    <div className={styles.slider}>
-                        <Slider
-                            defaultValue={1}
-                            onChange={(e, v) => onQuadReducerChange(e, v)}
-                            valueLabelDisplay="auto"
-                            step={1}
-                            min={-500}
-                            max={500}
-                            marks={quadReducerMarks}
-                        />
-                    </div>
-                </Item>
-
+ 
                 <Item sx={{ width: { xs: '100%', lg: '100%' } }}>
                     <Button variant="contained" color="primary" onClick={handleReset}>
                         Reset
                     </Button>
                 </Item>
             </Stack>
-
         </>
     )
 }

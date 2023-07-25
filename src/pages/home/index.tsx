@@ -70,10 +70,9 @@ const HomePageComponent = () => {
   }
 
   return (
-
-    <div  >
+ 
       <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} lg={6}>
           <Paper elevation={3} style={{ backgroundColor: 'var(--background-paper)', position: 'relative', borderRadius: '10px', overflow: 'hidden', border: '1px solid #eee' }}>
             <List style={{ padding: '16px', height: '100%' }}>
               {probabilityOptions.map((option) => (
@@ -91,7 +90,7 @@ const HomePageComponent = () => {
 
         <Divider orientation="vertical" flexItem style={{ backgroundColor: '#ccc', borderRadius: '3px', width: '2px', marginLeft: '15px', boxShadow: '-1px 0 1px rgba(0, 0, 0, 0.2)' }} />
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} lg={6}>
           <Paper elevation={3} style={{ backgroundColor: 'var(--background-paper)', position: 'relative', borderRadius: '10px', overflow: 'hidden', border: '1px solid #eee' }}>
             <List style={{ padding: '16px', height: '100%' }}>
               {conicOptions.map((option) => (
@@ -107,8 +106,7 @@ const HomePageComponent = () => {
           </Paper>
         </Grid>
       </Grid>
-
-    </div>
+ 
   );
 };
 
